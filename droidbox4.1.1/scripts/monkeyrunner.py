@@ -30,27 +30,27 @@ activity = sys.argv[3]
 
 device = None
 
-#logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 while device == None:
-	try:
-		print("Waiting for the device...")
-		device = MonkeyRunner.waitForConnection(3)
-	except:
-		pass
+    try:
+        print("Waiting for the device...")
+        device = MonkeyRunner.waitForConnection(3)
+    except:
+        pass
 
-#Install the package
+# Install the package
 print("Installing the application %s..." % apkName)
 device.installPackage(apkName)
 
 # sets the name of the component to start
 if "." in activity:
-	if activity.startswith('.'):
-		runComponent = "%s/%s%s" % (package, package, activity)
-	else:
-		 runComponent = "%s/%s" % (package, activity)
+    if activity.startswith('.'):
+        runComponent = "%s/%s%s" % (package, package, activity)
+    else:
+        runComponent = "%s/%s" % (package, activity)
 else:
-	runComponent = "%s/%s.%s" % (package, package, activity)
+    runComponent = "%s/%s.%s" % (package, package, activity)
 
 print("Running the component %s..." % (runComponent))
 
@@ -58,8 +58,8 @@ print("Running the component %s..." % (runComponent))
 p = subprocess.Popen(["adb", "shell", "am", "start", "-n", runComponent], stdout=subprocess.PIPE)
 out, err = p.communicate()
 
-#Activity not started?
+# Activity not started?
 if "Error type" in out:
-	sys.exit(1)
+    sys.exit(1)
 else:
-	sys.exit(0)
+    sys.exit(0)
